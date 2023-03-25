@@ -16,7 +16,7 @@ API-client-generic
 
 
 
-A generic API client library to quickly create API clients[D[D[D[D[D[D[D[D[D[D[D[D[D[D
+A generic API client library to quickly create API clients
 
 
 * Free software: GNU General Public License v3

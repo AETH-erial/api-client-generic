@@ -28,7 +28,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    description="A generic API client library to quickly create API clients[D[D[D[D[D[D[D[D[D[D[D[D[D[D",
+    description="A generic API client library to quickly create API clients",
     install_requires=requirements,
     license="GNU General Public License v3",
     long_description=readme + '\n\n' + history,
