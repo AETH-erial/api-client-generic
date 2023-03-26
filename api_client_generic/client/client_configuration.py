@@ -3,6 +3,9 @@ import os
 import yaml
 import json
 from api_client_generic.const import ROOT_DIR
+from api_client_generic.configuration.library_controller import LibraryController
+
+
 
 
 class ClientCfg:
@@ -73,10 +76,47 @@ class ClientCfg:
 
 
 
+    def __validate_config_fields(self, config: dict) -> bool:
+        """
+        Validate the config fields provided in the configuration
+
+        :type config: dict
+        :param config: the configuration to be validated
+        :rtype: bool
+        :returns: True if the fields check out
+        :raises IndexError: if incorrect number of fields are present
+        :raises TypeError: if config is not a dict
+        :raises KeyError: if an incorrect fieldname is passed
+
+        """
+        if not isinstance(config, dict):
+            raise TypeError(f'config should have been a dictionary but recieved a: {type(config)}')
+        approved_fieldnames = LibraryController().client_config_fieldnames
+        if len(config.keys()) != len(approved_fieldnames):
+            raise IndexError(
+                f'{len(cohfig.keys()} was passed. Only: {len(client_config_fieldnames)} allowed')
+        for field in config.keys():
+            if field not in approved_fieldnames:
+                raise ValueError(
+                    f'{field} not in approved fieldnames: {approved_fieldnames}')
+        return True
+
 
 class IncorrectFileTypeError(Exception):
     """ Exception type for invalid filetypes """
     pass
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
