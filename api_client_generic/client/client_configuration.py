@@ -2,6 +2,7 @@
 import os
 import yaml
 import json
+import toml
 from enum import Enum
 from api_client_generic.const import ROOT_DIR
 from api_client_generic.configuration.library_controller import LibraryController
@@ -59,25 +60,6 @@ class ClientCfg:
         return True
 
 
-    def __load_configuration(self, path: str) -> dict:
-        """
-        Load the specified configuration into the class.
-
-        :type path: str
-        :param path: the path to the configuration
-        :rtype: dict
-        :returns: a dictionary of the configuration
-        :raises TypeError: if path is not a str
-
-        """
-        if not isinstance(path, str):
-            raise TypeError(f'path should have been a str but got a: {type(path)}')
-        with open(path, 'r', encoding='utf-8') as file:
-            config = json.load(fp=file)
-        return config
-
-
-
     def __validate_config_fields(self, config: dict) -> bool:
         """
         Validate the config fields provided in the configuration
@@ -125,13 +107,63 @@ class ClientCfg:
         raise IncorrectFileTypeError(f'Passed config: {config_path} not in an approved format: {ConfigurationTypes.values()}')
 
 
+    def __load_conf_from_json(self, path: str) -> dict:
+        """
+        Load the specified configuration into the class.
+
+        :type path: str
+        :param path: the path to the configuration
+        :rtype: dict
+        :returns: a dictionary of the configuration
+        :raises TypeError: if path is not a str
+
+        """
+        if not isinstance(path, str):
+            raise TypeError(f'path should have been a str but got a: {type(path)}')
+        with open(path, 'r', encoding='utf-8') as file:
+            config = json.load(fp=file)
+        return config
+
+    def __load_conf_from_yaml(self, path: str) -> dict:
+        """
+        Load the specified configuration into the class.
+
+        :type path: str
+        :param path: the path to the configuration
+        :rtype: dict
+        :returns: a dictionary of the configuration
+        :raises TypeError: if path is not a str
+
+        """
+        if not isinstance(path, str):
+            raise TypeError(f'path should have been a str but got a: {type(path)}')
+        with open(path, 'r', encoding='utf-8') as file:
+            config = yaml.load(file)
+        return config  
+
+
+    def __load_conf_from_toml(self, path: str) -> dict:
+        """
+        Load the specified configuration into the class.
+
+        :type path: str
+        :param path: the path to the configuration
+        :rtype: dict
+        :returns: a dictionary of the configuration
+        :raises TypeError: if path is not a str
+
+        """
+        if not isinstance(path, str):
+            raise TypeError(f'path should have been a str but got a: {type(path)}')
+        with open(path, 'r', encoding='utf-8') as file:
+            config = toml.load(file)
+        return config  
+
 
 class ConfigurationTypes(Enum):
     """ filetypes to be used as client configuration files. """
     JSON = 'json'
-    YAML = 'yml'
-    CFG = 'cfg'
-    INI = 'ini'
+    YAML = 'yaml'
     TOML = 'toml'
 
     @classmethod
