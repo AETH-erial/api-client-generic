@@ -112,10 +112,17 @@ class ClientCfg:
         :param config_path: the path to the configuration
         :rtype: ConfigurationTypes
         :param ConfigurationTypes: Enum class holding the approved config types
+        :returns: an enum instance with the config filetype
         :raises IncorrectFileTypeError: if the passed config is not an approved type
+        :raises FileNotFoundError: if the file cant be found
 
         """
-        
+        if os.path.isfile(config_path) is False:
+            raise FileNotFoundError(f'File: {config_path} not found. Check path.')
+        filetype = config_path.split('.')[-1]
+        if filetype in ConfigurationTypes.values():
+            return getattr(ConfigurationTypes, filetype)
+        raise IncorrectFileTypeError(f'Passed config: {config_path} not in an approved format: {ConfigurationTypes.values()}')
 
 
 
@@ -127,6 +134,15 @@ class ConfigurationTypes(Enum):
     INI = 'ini'
     TOML = 'toml'
 
+    @classmethod
+    def values(cls) -> list:
+        """
+        Returns a list of the enums values
+        """
+        return_list = []
+        for value in cls._member_names_: # pylint: disable=no-member
+            return_list.append(getattr(cls, value).value)
+        return return_list
 
 
 
