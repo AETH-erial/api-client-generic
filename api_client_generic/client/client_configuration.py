@@ -94,7 +94,7 @@ class ClientCfg:
         approved_fieldnames = LibraryController().client_config_fieldnames
         if len(config.keys()) != len(approved_fieldnames):
             raise IndexError(
-                f'{len(cohfig.keys()} was passed. Only: {len(client_config_fieldnames)} allowed')
+                f'{len(cohfig.keys())} was passed. Only: {len(client_config_fieldnames)} allowed')
         for field in config.keys():
             if field not in approved_fieldnames:
                 raise ValueError(
