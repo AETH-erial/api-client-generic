@@ -38,7 +38,7 @@ class ClientCfg:
     def __evaluate_ssl_certificate(self, cert_path: str) -> bool:
         """
         Evaulate a certificate file. Valid filetypes are defined in the
-        api_client_generic/configuration/config.yaml
+        api_client_generic/configuration/libctrl.yaml
 
         :type cert_path: str
         :param cert_path: the path of the certificate file to use

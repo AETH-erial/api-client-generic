@@ -15,7 +15,7 @@ class LibraryController:
 
     def client_config_fieldnames(self) -> list:
         """
-        Return a list of the fieldnames specified in the libconf.yml file
+        Return a list of the fieldnames specified in the libctrl.yml file
 
         :param: None
         :rtype: list
@@ -28,7 +28,7 @@ class LibraryController:
 
     def ssl_cert_types(self) -> list:
         """
-        Returns a list of set SSL file extension types in the libconf.yml file
+        Returns a list of set SSL file extension types in the libctrl.yml file
         
         :param: None
         :rtype: list
