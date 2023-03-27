@@ -2,6 +2,7 @@
 import os
 import yaml
 import json
+from enum import Enum
 from api_client_generic.const import ROOT_DIR
 from api_client_generic.configuration.library_controller import LibraryController
 
@@ -47,13 +48,14 @@ class ClientCfg:
         :raises FileNotFoundError: if the certificate path doesnt resolve
 
         """
+        cert_types = LibraryController().ssl_cert_types()
         if not isinstance(cert_path, str):
             raise TypeError(f'cert_path should have been a str but got a: {type(cert_path)}')
         if os.path.isfile(os.path.isfile(cert_path)) is False:
             raise FileNotFoundError(f'path: {cert_path} did not resolve. Check your config.')
         filetype = cert_path.split('.')[-1]
-        if filetype not in libconf.cert_types:
-            raise IncorrectFileTypeError(f'filetype: {filetype} is not in {libconf.cert_types}')
+        if filetype not in cert_types:
+            raise IncorrectFileTypeError(f'filetype: {filetype} is not in {cert_types}')
         return True
 
 
@@ -100,6 +102,32 @@ class ClientCfg:
                 raise ValueError(
                     f'{field} not in approved fieldnames: {approved_fieldnames}')
         return True
+
+
+    def __evaluate_client_configuration(self, config_path: str) -> ConfigurationTypes:
+        """
+        Evaluate the passed configuration type and parse it based on the extension
+        
+        :type config_path: str
+        :param config_path: the path to the configuration
+        :rtype: ConfigurationTypes
+        :param ConfigurationTypes: Enum class holding the approved config types
+        :raises IncorrectFileTypeError: if the passed config is not an approved type
+
+        """
+        
+
+
+
+class ConfigurationTypes(Enum):
+    """ filetypes to be used as client configuration files. """
+    JSON = 'json'
+    YAML = 'yml'
+    CFG = 'cfg'
+    INI = 'ini'
+    TOML = 'toml'
+
+
 
 
 class IncorrectFileTypeError(Exception):

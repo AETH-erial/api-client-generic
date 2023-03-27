@@ -26,4 +26,16 @@ class LibraryController:
         pass
 
 
+    def ssl_cert_types(self) -> list:
+        """
+        Returns a list of set SSL file extension types in the libconf.yml file
+        
+        :param: None
+        :rtype: list
+        :returns: a list of the file extensions
+        :raises None
+        
+        """
+        pass
+
 
